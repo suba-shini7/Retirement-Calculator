@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirement Calculator</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #D0DDD0;
+    }
+    .main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+    nav{
+  background-color: #110145;
+  height: 60px;
+  color: #AAB99A;
+  padding-top: 30px;
+    }
+    .container {
+      background: #fff;
+      padding: 70px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      font-size: 18px;
+      color: #333;
+    }
+    footer {
+      background-color: #AAB99A; /* Dark background for a professional look */
+    color: #ecf0f1; /* Light text for contrast */
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    border-top: 4px solid #AAB99A; /* Adds a color highlight */
+    margin-top: 20px;
+  }
+  footer h4 {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+  footer h4 span {
+    color: #34495e;; /* Highlighted text */
+    font-weight: bold;
+  }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Retirement Age Calculator</h1>
+  </nav>
+  <div class="main">
+    
+    <div class="container">
+      <label for="birthYear">Birth Year</label>
+      <input type="number" id="birthYear" placeholder="Enter birth year" />
+      
+      <label for="joiningDate">Date of Joining</label>
+      <input type="date" id="joiningDate" />
+  
+      <button onclick="calculateRetirement()">Calculate Retirement Date</button>
+  
+      <div id="result" class="result"></div>
+    </div>
+  </div>
+  <footer>
+    <h4>Powered by <span>MARIAPPAN SALARY</span>, DA GROUP ADMIN</h4>
+  </footer>
+
+  <script>
+    function calculateRetirement() {
+      const birthYear = document.getElementById('birthYear').value;
+      const joiningDate = document.getElementById('joiningDate').value;
+  
+      if (!birthYear || !joiningDate) {
+        document.getElementById('result').innerText = 'Please enter both birth year and joining date.';
+        return;
+      }
+  
+      // Calculate retirement year
+      const retirementAge = 60;
+      const retirementYear = parseInt(birthYear) + retirementAge;
+  
+      // Get retirement month and ensure the date is the last day of that month
+      const joiningDateObj = new Date(joiningDate);
+      const retirementMonth = joiningDateObj.getMonth(); // Month of joining date
+      const retirementDateObj = new Date(retirementYear, retirementMonth + 1, 0); // Last day of retirement month
+  
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const retirementDate = retirementDateObj.toLocaleDateString('en-US', options);
+  
+      document.getElementById('result').innerText = `Your retirement date is: ${retirementDate}`;
+    }
+  </script>
+  
+</body>
+</html>
