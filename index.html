@@ -5,32 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Retirement Calculator</title>
   <style>
-    *{
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
     body {
       font-family: Arial, sans-serif;
     }
-    .main{
+    .main {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 70vh;
+      height: 80vh;
       background-color: #D0DDD0;
-
     }
-    nav{
-  background-color: #110145;
-  height: 60px;
-  color: #AAB99A;
-  padding-top: 30px;
+    nav {
+      background-color: #110145;
+      color: #AAB99A;
+      padding: 15px;
+      text-align: center;
     }
     .container {
       background: #fff;
-      padding: 30px;
+      padding: 40px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
     }
     h1 {
       font-size: 24px;
@@ -58,27 +59,29 @@
       background-color: #0056b3;
     }
     .result {
-      font-size: 18px;
+      font-size: 16px;
       color: #333;
+      margin-top: 10px;
+      text-align: center;
     }
     footer {
-      background-color: #AAB99A; /* Dark background for a professional look */
-    color: #ecf0f1; /* Light text for contrast */
-    padding: 20px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    border-top: 4px solid #AAB99A; /* Adds a color highlight */
-  }
-  footer h4 {
-    margin: 0;
-    font-size: 18px;
-    letter-spacing: 1px;
-  }
-  footer h4 span {
-    color: #34495e;; /* Highlighted text */
-    font-weight: bold;
-  }
-
+      background-color: #AAB99A;
+      color: #ecf0f1;
+      padding: 15px;
+      text-align: center;
+    }
+    footer h4 {
+      margin: 10px;
+      font-size: 14px;
+    }
+    footer h4 span {
+      color: #34495e;
+      font-weight: bold;
+    }
+    .ft{
+color: #8b0101;
+font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -86,13 +89,12 @@
     <h1>Retirement Age Calculator</h1>
   </nav>
   <div class="main">
-    
     <div class="container">
-      <label for="birthYear">Birth Year</label>
-      <input type="number" id="birthYear" placeholder="Enter birth year" />
-      
-      <label for="joiningDate">Date of Joining</label>
-      <input type="date" id="joiningDate" />
+      <label for="birthDate">Date of Birth</label>
+      <input type="date" id="birthDate" placeholder="Enter your date of birth" />
+
+      <label for="joiningDate">Joining Date</label>
+      <input type="date" id="joiningDate" placeholder="Enter your joining date" />
   
       <button onclick="calculateRetirement()">Calculate Retirement Date</button>
   
@@ -100,40 +102,42 @@
     </div>
   </div>
   <footer>
-    <h4 style="margin: 0; font-size: 18px;">
-      © 2025 <span style="color: #ffd34d; text-shadow: 1px 1px 5px rgba(255, 77, 77, 0.6);">
-        MARIAPPAN
-      </span>
-      , <span style="color: #670fc0; font-weight: bold;">SALARY DA GROUP ADMIN 💼📈</span>
-    </h4>
+    <h4>© 2025 <span>MARIAPPAN</span></h4> 
+    <div><span class="ft">SALARY DA GROUP ADMIN 💼📈</span></div>
   </footer>
-  
-
   <script>
     function calculateRetirement() {
-      const birthYear = document.getElementById('birthYear').value;
+      const birthDate = document.getElementById('birthDate').value;
       const joiningDate = document.getElementById('joiningDate').value;
   
-      if (!birthYear || !joiningDate) {
-        document.getElementById('result').innerText = 'Please enter both birth year and joining date.';
+      if (!birthDate || !joiningDate) {
+        document.getElementById('result').innerText = 'Please enter both Date of Birth and Joining Date.';
         return;
       }
   
-      // Calculate retirement year
-      const retirementAge = 60;
-      const retirementYear = parseInt(birthYear) + retirementAge;
-  
-      // Get retirement month and ensure the date is the last day of that month
+      const birthDateObj = new Date(birthDate);
+
+      // Calculate the retirement year (60 years from birth date)
+      const retirementYear = birthDateObj.getFullYear() + 60;
+      const birthMonth = birthDateObj.getMonth();
+
+      // Calculate retirement date as the last day of the retirement month
+      const retirementDateObj = new Date(retirementYear, birthMonth + 1, 0); // 0 = Last day of the month
+
+      // Convert joining date to a readable format
       const joiningDateObj = new Date(joiningDate);
-      const retirementMonth = joiningDateObj.getMonth(); // Month of joining date
-      const retirementDateObj = new Date(retirementYear, retirementMonth + 1, 0); // Last day of retirement month
-  
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      const retirementDate = retirementDateObj.toLocaleDateString('en-US', options);
+      const formattedJoiningDate = joiningDateObj.toLocaleDateString('en-US', options);
+
+      // Format retirement date
+      const formattedRetirementDate = retirementDateObj.toLocaleDateString('en-US', options);
   
-      document.getElementById('result').innerText = `Your retirement date is: ${retirementDate}`;
+      // Display the results
+      document.getElementById('result').innerText = `
+        Joining Date: ${formattedJoiningDate}\n
+        Retirement Date: ${formattedRetirementDate}
+      `;
     }
   </script>
-  
 </body>
 </html>
